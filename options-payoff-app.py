@@ -64,11 +64,11 @@ for price in price_range:
 
 # 绘图
 fig, ax = plt.subplots()
-ax.plot(price_range, total_payoffs, label="总收益")
+ax.plot(price_range, total_payoffs, label="value")
 ax.axhline(0, color="gray", linestyle="--")
-ax.set_xlabel("标的价格")
-ax.set_ylabel("收益")
-ax.set_title("期权组合收益图")
+ax.set_xlabel("strike")
+ax.set_ylabel("option value")
+ax.set_title("option map")
 ax.grid(True)
 st.pyplot(fig)
 
