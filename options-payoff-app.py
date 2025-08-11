@@ -130,6 +130,8 @@ def total_margin_capital(options, underlying_price):
 
 capital_required = total_margin_capital(options, stockprice)
 
+
+
 st.markdown(f"💰 **总持仓成本含手续费：{capital_required:.2f} 元**")
 
 
@@ -147,8 +149,11 @@ margin_ratio = marginratio
 totolmargin = sum(calculate_initmargin(opt,  margin_ratio)for opt in options)
 
 
-
 capital_required = totolmargin+capital_required
+
+if capital_required < 0:
+    st.error(f"❌ 资金成本为负数: {capital_required:.2f}，请检查输入参数。")
+    st.stop()  # 终止执行，防止后面计算出错
 
 st.write(f"💰 需要冻结的保证金资金总额和手续费（基于当前价格 {stockprice}）：{capital_required:.2f}")
 
