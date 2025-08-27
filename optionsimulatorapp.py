@@ -69,11 +69,11 @@ def simulate(
 # =========================
 # Plot: all paths (fast)
 # =========================
-def plot_all_paths(all_paths, initial_capital=100, log_y=False):
+def plot_all_paths(all_paths, initial_capital=100, log_y=False,max_lines=100):
     # 1. Show 10 random sample equity curves
     n_simulations = len(all_paths)
     fig = plt.figure(figsize=(10, 6))
-    for i in np.random.choice(n_simulations, 100, replace=False):
+    for i in np.random.choice(n_simulations, max_lines, replace=False):
         plt.plot(all_paths[i], alpha=0.7)
     plt.axhline(initial_capital, color='gray', linestyle='--', label="Initial Capital")
 
@@ -167,6 +167,7 @@ def plot_final_hist(final_capitals, capital_log=False):
     ax.set_ylabel("Frequency(Normal)")
     ax.legend(loc="upper left", frameon=False)
     ax.grid(True, alpha=0.2, linewidth=0.6)
+
     if capital_log:
         ax.set_xscale('log')
     for spine in ("top", "right"):
@@ -253,7 +254,7 @@ widgets[6].metric("Min/Max", f"{min_cap:.0f} / {max_cap:.0f}")
 # 1) All paths (subset for speed)
 paths_to_draw = min(max_lines, all_paths.shape[0])
 fig_paths = plot_all_paths(all_paths[:paths_to_draw], initial_capital=initial_capital
-                           , log_y=log_capital)
+                           , log_y=log_capital,max_lines = max_lines)
 st.pyplot(fig_paths, use_container_width=True)
 
 # 2) Heatmap + 3) Final histogram
