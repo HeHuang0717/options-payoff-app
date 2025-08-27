@@ -1,4 +1,4 @@
-# app.py
+# 花里胡哨
 import io
 import numpy as np
 import pandas as pd
@@ -155,19 +155,18 @@ def plot_equity_heatmap(all_paths, n_bins=200, normalize='column', log_scale=Fal
 
 
 
-def plot_final_hist(final_capitals, log_y=False):
+def plot_final_hist(final_capitals, capital_log=False):
     fig, ax = plt.subplots(figsize=(10, 6), dpi=120)
-
-    ax.hist(final_capitals, bins=30, edgecolor="black", alpha=0.7,density = True)
+    final_capitals = np.log1p(final_capitals) if capital_log else final_capitals
+    ax.hist(final_capitals, bins=30, edgecolor="black", alpha=0.7, density=True)
     ax.axvline(final_capitals.mean(), linestyle="--", linewidth=1.2,
                label=f"Mean: {final_capitals.mean():.2f}")
+
     ax.set_title("Final Capital Distribution")
     ax.set_xlabel("Final Capital")
     ax.set_ylabel("Frequency")
     ax.legend(loc="upper left", frameon=False)
     ax.grid(True, alpha=0.2, linewidth=0.6)
-    if log_y:
-        ax.set_xscale('log')
     for spine in ("top", "right"):
         ax.spines[spine].set_visible(False)
     fig.tight_layout()
@@ -269,7 +268,7 @@ with c1:
     st.pyplot(fig_eq, use_container_width=True)
 
 with c2:
-    fig_hist = plot_final_hist(final_capitals, log_y=log_capital)
+    fig_hist = plot_final_hist(final_capitals, capital_log=log_capital)
     st.pyplot(fig_hist, use_container_width=True)
 
 # =========================
